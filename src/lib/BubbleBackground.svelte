@@ -3,7 +3,7 @@
 	const cols = 15;
 </script>
 
-<div class="absolute bottom-0 right-1/2 flex justify-center">
+<div class="relative bottom-0 right-1/2 flex justify-center">
 	<div
 		class="relative grid min-h-screen w-[2200px] translate-x-[1100px] place-items-center"
 		style="grid-template-rows: repeat({rows}, minmax(0, 1fr)); grid-template-columns: repeat({cols}, minmax(0, 1fr));"
