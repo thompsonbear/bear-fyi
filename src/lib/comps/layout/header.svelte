@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Sun from 'svelte-radix/Sun.svelte';
-	import Moon from 'svelte-radix/Moon.svelte';
 	import { toggleMode } from 'mode-watcher';
 	import { Button } from '$lib/comps/ui/button/index.js';
+	import 'iconify-icon';
 
 	let navlinks: Link[] = [
 		{ text: 'blog', href: '/' },
@@ -24,12 +23,14 @@
 			</Button>
 		{/each}
 		<Button onclick={toggleMode} variant="ghost" size="icon">
-			<Moon
-				class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-			/>
-			<Sun
-				class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-			/>
+			<iconify-icon
+				class="rotate-0 scale-100 text-lg transition-all dark:-rotate-90 dark:scale-0"
+				icon="mingcute:moon-stars-line"
+			></iconify-icon>
+			<iconify-icon
+				class="absolute rotate-90 scale-0 text-lg transition-all dark:rotate-0 dark:scale-100"
+				icon="mingcute:sun-line"
+			></iconify-icon>
 			<span class="sr-only">Toggle theme</span>
 		</Button>
 	</div>
