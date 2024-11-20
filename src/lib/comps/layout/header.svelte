@@ -3,10 +3,7 @@
 	import { Button } from '$lib/comps/ui/button/index.js';
 	import 'iconify-icon';
 
-	let navlinks: Link[] = [
-		{ text: 'blog', href: '/' },
-		{ text: 'about', href: '/about' }
-	];
+	const { navlinks } = $props();
 </script>
 
 <nav class="sticky top-0 flex h-14 w-full max-w-[1200px] items-center justify-between px-4">
