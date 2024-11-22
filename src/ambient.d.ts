@@ -1,6 +1,7 @@
-interface Link {
-	text: string;
-	href: string;
-	icon?: string;
-	new_tab?: boolean;
+declare module '*.md' {
+	import type { SvelteComponent } from 'svelte';
+
+	export default class Comp extends SvelteComponent {}
+
+	export const metadata: Record<string, unknown>;
 }

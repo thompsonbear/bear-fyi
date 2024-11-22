@@ -2,7 +2,6 @@
 	import { toggleMode } from 'mode-watcher';
 	import { Button } from '$lib/comps/ui/button/index.js';
 	import 'iconify-icon';
-
 	const { navlinks } = $props();
 </script>
 
@@ -15,7 +14,7 @@
 	</a>
 	<div class="flex items-center gap-2">
 		{#each navlinks as link}
-			<Button href={link.href} variant="ghost">
+			<Button href={link.href} variant="link" class="text-foreground focus:ring-0">
 				{link.text}
 			</Button>
 		{/each}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { ModeWatcher } from 'mode-watcher';
+	import type { Link } from '$lib/types';
 	let { children } = $props();
 
 	import Header from '$lib/comps/layout/header.svelte';

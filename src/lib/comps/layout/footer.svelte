@@ -2,7 +2,7 @@
 	import { Separator } from '$lib/comps/ui/separator/index.js';
 	import Button from '$lib/comps/ui/button/button.svelte';
 	import 'iconify-icon';
-
+	import type { Link } from '$lib/types';
 	const { navlinks } = $props();
 
 	let sociallinks: Link[] = [
@@ -45,10 +45,10 @@
 			<div
 				class="flex h-10 flex-grow items-center justify-between rounded-tl-md bg-primary bg-noise px-4 pt-2 font-medium"
 			>
-				<span class="font-marker hidden text-2xl text-primary-foreground md:inline-block"
+				<span class="hidden font-marker text-2xl text-primary-foreground md:inline-block"
 					>Blog - Thompson Bear</span
 				>
-				<div class="xs:justify-end flex flex-grow items-center justify-between gap-2">
+				<div class="flex flex-grow items-center justify-between gap-2 xs:justify-end">
 					{#each sociallinks as link}
 						<a
 							href={link.href}
@@ -72,11 +72,7 @@
 	<div class="flex w-full flex-col items-center bg-primary bg-noise">
 		<div class="flex h-12 w-full max-w-[1200px] items-center justify-end">
 			{#each navlinks as link}
-				<Button
-					href={link.href}
-					variant="ghost"
-					class="text-base text-primary-foreground decoration-primary-foreground underline-offset-2 hover:bg-primary hover:underline"
-				>
+				<Button href={link.href} variant="link" class="text-base text-primary-foreground">
 					<span class="text-primary-foreground">{link.text}</span>
 				</Button>
 			{/each}
