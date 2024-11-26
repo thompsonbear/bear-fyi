@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import Footer from '$lib/comps/layout/footer.svelte';
 	import Badge from '$lib/comps/ui/badge/badge.svelte';
-	import * as Card from '$lib/comps/ui/card/index.js';
 
 	import { formatDate } from '$lib/utils';
 
@@ -10,27 +7,25 @@
 </script>
 
 <section>
-	<div class="grid grid-cols-2 gap-4">
+	<div class="grid gap-4 md:grid-cols-2">
 		{#each data.posts as post}
-			<Card.Root
-				onclick={() => goto(`/${post.slug}`)}
-				class="group cursor-pointer transition-colors duration-200 hover:border-primary"
+			<a
+				class="flex flex-col gap-4 rounded bg-secondary bg-noise p-4 transition-colors hover:bg-primary"
+				href="/{post.slug}"
 			>
-				<Card.Header>
-					<h1 class="font-title text-5xl transition-colors duration-200 group-hover:text-primary">
+				<div class="space-y-1">
+					<h1 class="font-title text-xl group-hover:text-primary md:text-5xl">
 						{post.title}
 					</h1>
-					<p class="date">{formatDate(post.date)}</p>
-				</Card.Header>
-				<Card.Content>
-					<p class="description">{post.description}</p>
-				</Card.Content>
-				<Card.Footer class="flex flex-wrap gap-2">
+					<p class="text-sm">{formatDate(post.date)}</p>
+				</div>
+				<p class="description">{post.description}</p>
+				<div class="flex gap-1">
 					{#each post.categories as category}
-						<Badge variant="outline">{category}</Badge>
+						<Badge class="bg-foreground text-background">{category}</Badge>
 					{/each}
-				</Card.Footer>
-			</Card.Root>
+				</div>
+			</a>
 		{/each}
 	</div>
 </section>
