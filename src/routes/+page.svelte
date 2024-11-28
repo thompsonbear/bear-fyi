@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Badge from '$lib/comps/ui/badge/badge.svelte';
+	import InteractCard from '$lib/comps/custom/interact-card.svelte';
 
 	import { formatDate } from '$lib/utils';
 
@@ -27,5 +28,6 @@
 				</div>
 			</a>
 		{/each}
+		<InteractCard></InteractCard>
 	</div>
 </section>

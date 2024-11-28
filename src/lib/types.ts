@@ -15,3 +15,9 @@ export type Link = {
 	icon?: string;
 	new_tab?: boolean;
 };
+
+export type Point = {
+	x: number;
+	y: number;
+	z?: number;
+};
