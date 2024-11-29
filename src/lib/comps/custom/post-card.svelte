@@ -1,8 +1,12 @@
 <script lang="ts">
 	import type { Point } from '$lib/types';
 	import { clearAnimations, getDistance } from '$lib/utils';
+	import { formatDate } from '$lib/utils';
+	import Badge from '$lib/comps/ui/badge/badge.svelte';
 
-	let card: HTMLDivElement;
+	let clientWidth: number = $state(0);
+	let isMobile: boolean = $state(true);
+	let card: HTMLAnchorElement;
 	let cursor: HTMLSpanElement;
 	let showCursor: boolean = $state(false);
 	let rect: DOMRect;
@@ -10,7 +14,7 @@
 	let maxDistance: number;
 	let leaveTimeout: number | undefined = undefined;
 
-	let { mousePos = $bindable(), children } = $props();
+	let { mousePos = $bindable(), post } = $props();
 
 	function getPercentDistance(origin: Point, current: Point, maxDistance: number) {
 		// Get the pixel point distance between the center of the rect and the cursor offset location
@@ -24,6 +28,8 @@
 	}
 
 	function handleMouseMove() {
+		if (isMobile) return;
+
 		const relativePos = getRelativePos(mousePos, rect);
 		const percentDistance = getPercentDistance(center, relativePos, maxDistance);
 
@@ -34,6 +40,7 @@
 			},
 			{ duration: 1000, fill: 'forwards' }
 		);
+		showCursor = true;
 	}
 
 	function handleMouseEnter() {
@@ -42,6 +49,8 @@
 			clearTimeout(leaveTimeout);
 			clearAnimations(cursor);
 		}
+
+		if (isMobile) return;
 
 		// Set styles immediately at time of mouse enter
 		const relativePos = getRelativePos(mousePos, rect);
@@ -53,6 +62,10 @@
 	}
 
 	function handleMouseLeave() {
+		card.style.scale = '1';
+
+		if (isMobile) return;
+
 		cursor.animate({ scale: 0 }, { duration: 300 });
 		leaveTimeout = setTimeout(() => {
 			clearAnimations(cursor);
@@ -60,10 +73,19 @@
 		}, 250);
 	}
 
+	function handleMouseDown() {
+		card.style.scale = '0.99';
+	}
+
+	function handleMouseUp() {
+		card.style.scale = '1';
+	}
+
 	function handleResize() {
 		rect = card.getBoundingClientRect();
 		center = { x: rect.width / 2, y: rect.height / 2 };
 		maxDistance = getDistance({ x: 0, y: 0 }, { x: center.x, y: center.y });
+		isMobile = clientWidth < 1000;
 	}
 
 	function handleScroll() {
@@ -75,11 +97,15 @@
 	});
 </script>
 
-<svelte:window onscroll={handleScroll} onresize={handleResize} />
+<svelte:window onscroll={handleScroll} onresize={handleResize} bind:innerWidth={clientWidth} />
 
-<div
+<a
+	href="/{post.slug}"
 	bind:this={card}
-	class="relative overflow-clip rounded bg-secondary bg-noise"
+	draggable="false"
+	class="border-3 relative flex flex-col gap-4 overflow-clip rounded border bg-secondary bg-noise p-4 shadow-sm"
+	onmousedown={handleMouseDown}
+	onmouseup={handleMouseUp}
 	onmousemove={handleMouseMove}
 	onmouseleave={handleMouseLeave}
 	onmouseenter={handleMouseEnter}
@@ -91,7 +117,20 @@
 			? 'block'
 			: 'hidden'}"
 	></span>
-	<span class="relative z-10">
-		{@render children()}
+	<span class="relative z-10 flex flex-col gap-4">
+		<div class="space-y-1">
+			<p class="text-sm">{formatDate(post.date)}</p>
+			<h1 class="font-title text-xl group-hover:text-primary md:text-5xl">
+				{post.title}
+			</h1>
+		</div>
+		<p class="description">{post.description}</p>
+		<div class="flex gap-1">
+			{#each post.categories as category}
+				<Badge class="bg-foreground text-background hover:bg-secondary hover:text-foreground"
+					>{category}</Badge
+				>
+			{/each}
+		</div>
 	</span>
-</div>
+</a>

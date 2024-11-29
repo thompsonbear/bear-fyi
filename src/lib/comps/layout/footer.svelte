@@ -34,11 +34,12 @@
 		<div class="h-10 flex-grow rounded-tr-md bg-primary bg-noise"></div>
 		<div class="flex h-10 w-full max-w-[1200px]">
 			<div class="flex flex-col">
-				<a href="/" class="flex h-12 w-fit items-end rounded-md bg-background bg-noise p-4">
-					<span class="font-title text-lg font-medium">bear</span>
-					<span class="mb-1.5 mr-0.5 h-1.5 w-1.5 rounded-full bg-primary"></span><span
-						class="font-title text-lg">fyi</span
-					>
+				<a
+					href="/"
+					class="flex h-12 w-fit items-end rounded-md bg-background bg-noise p-4 font-title text-lg"
+				>
+					<span class=" font-medium">bear</span>
+					<span class="mb-1.5 mr-0.5 h-1.5 w-1.5 rounded-full bg-primary"></span><span>fyi</span>
 				</a>
 			</div>
 
@@ -78,8 +79,18 @@
 			{/each}
 		</div>
 		<Separator class="max-w-[1200px] bg-primary-foreground"></Separator>
-		<div class="flex h-12 w-full max-w-[1200px] items-center justify-start px-4">
-			<span class="text-sm text-primary-foreground">©{currentYear} Thompson Bear</span>
+		<div
+			class="flex h-12 w-full max-w-[1200px] items-center justify-between px-4 text-sm text-primary-foreground"
+		>
+			<span class="">©{currentYear} Thompson Bear</span>
+			<Button
+				variant="link"
+				class="h-fit bg-transparent px-0 py-1 text-primary-foreground"
+				href="https://github.com/thompsonbear/bear-fyi"
+			>
+				<iconify-icon icon="mingcute:code-line"></iconify-icon>
+				Source
+			</Button>
 		</div>
 	</div>
 </footer>
