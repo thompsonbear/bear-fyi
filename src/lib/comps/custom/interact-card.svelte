@@ -1,36 +1,72 @@
 <script lang="ts">
 	import type { Point } from '$lib/types';
+	import { clearAnimations, getDistance } from '$lib/utils';
 
-	let mousePos: Point = $state({ x: 0, y: 0 });
-	let style = $state('translate: 0 0; scale: 0');
-	let card: HTMLAnchorElement;
+	let card: HTMLDivElement;
+	let cursor: HTMLSpanElement;
+	let showCursor: boolean = $state(false);
 	let rect: DOMRect;
 	let center: Point;
-	let relativePos: Point;
 	let maxDistance: number;
+	let leaveTimeout: number | undefined = undefined;
 
-	// TODO: Need to rate limit this, probably
-	function handleMouseMove(e: MouseEvent) {
-		mousePos = { x: e.clientX, y: e.clientY };
-		relativePos = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+	let { mousePos = $bindable(), children } = $props();
 
-		let pixelDist = getDistance(center, relativePos);
-		let percentDistFromCenter = 1 - pixelDist / maxDistance;
+	function getPercentDistance(origin: Point, current: Point, maxDistance: number) {
+		// Get the pixel point distance between the center of the rect and the cursor offset location
+		let pixelDist = getDistance(origin, current);
+		// Convert to a percentage between 0 and 1, 1 being the center and 0 being the max distance
+		return 1 - pixelDist / maxDistance;
+	}
 
-		style = `translate: ${relativePos.x}px ${relativePos.y}px; scale: ${percentDistFromCenter};`;
+	function getRelativePos(mousePos: Point, rect: DOMRect) {
+		return { x: mousePos.x - rect.left, y: mousePos.y - rect.top };
+	}
+
+	function handleMouseMove() {
+		const relativePos = getRelativePos(mousePos, rect);
+		const percentDistance = getPercentDistance(center, relativePos, maxDistance);
+
+		cursor.animate(
+			{
+				translate: `${relativePos.x}px ${relativePos.y}px`,
+				scale: `${percentDistance}`
+			},
+			{ duration: 1000, fill: 'forwards' }
+		);
+	}
+
+	function handleMouseEnter() {
+		// Clear the existing timeout from the leave handler if it is still running - need to clear the animations to avoid jumping
+		if (leaveTimeout) {
+			clearTimeout(leaveTimeout);
+			clearAnimations(cursor);
+		}
+
+		// Set styles immediately at time of mouse enter
+		const relativePos = getRelativePos(mousePos, rect);
+		const percentDistance = getPercentDistance(center, relativePos, maxDistance);
+		cursor.style.translate = `${relativePos.x}px ${relativePos.y}px`;
+		cursor.style.scale = `${percentDistance}`;
+
+		showCursor = true;
+	}
+
+	function handleMouseLeave() {
+		cursor.animate({ scale: 0 }, { duration: 300 });
+		leaveTimeout = setTimeout(() => {
+			clearAnimations(cursor);
+			showCursor = false;
+		}, 250);
 	}
 
 	function handleResize() {
-		getRect();
+		rect = card.getBoundingClientRect();
 		center = { x: rect.width / 2, y: rect.height / 2 };
 		maxDistance = getDistance({ x: 0, y: 0 }, { x: center.x, y: center.y });
 	}
 
-	function getDistance(first: Point, second: Point) {
-		return Math.sqrt((second.x - first.x) ** 2 + (second.y - first.y) ** 2);
-	}
-
-	function getRect() {
+	function handleScroll() {
 		rect = card.getBoundingClientRect();
 	}
 
@@ -39,17 +75,23 @@
 	});
 </script>
 
-<svelte:window onscroll={getRect} onresize={handleResize} />
+<svelte:window onscroll={handleScroll} onresize={handleResize} />
 
-<a
-	href="https://thompsonbear.com"
+<div
 	bind:this={card}
-	class="relative grid h-52 w-52 place-items-center overflow-clip bg-secondary bg-noise"
-	onmousemove={(e) => handleMouseMove(e)}
+	class="relative overflow-clip rounded bg-secondary bg-noise"
+	onmousemove={handleMouseMove}
+	onmouseleave={handleMouseLeave}
+	onmouseenter={handleMouseEnter}
+	aria-hidden="true"
 >
 	<span
-		class="absolute -left-1/2 -top-1/2 aspect-square w-full rounded-full bg-primary bg-noise"
-		{style}
+		bind:this={cursor}
+		class="absolute -left-[250px] -top-[250px] aspect-square h-[500px] rounded-full bg-primary bg-noise {showCursor
+			? 'block'
+			: 'hidden'}"
 	></span>
-	<span class="z-10">x: {mousePos.x}, y: {mousePos.y}</span>
-</a>
+	<span class="relative z-10">
+		{@render children()}
+	</span>
+</div>

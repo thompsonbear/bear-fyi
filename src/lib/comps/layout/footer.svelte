@@ -35,9 +35,9 @@
 		<div class="flex h-10 w-full max-w-[1200px]">
 			<div class="flex flex-col">
 				<a href="/" class="flex h-12 w-fit items-end rounded-md bg-background bg-noise p-4">
-					<span class="font-title text-lg font-medium leading-6">bear</span>
-					<span class="mb-1 mr-0.5 h-1.5 w-1.5 rounded-full bg-primary"></span><span
-						class="text-lg leading-[1.35rem]">fyi</span
+					<span class="font-title text-lg font-medium">bear</span>
+					<span class="mb-1.5 mr-0.5 h-1.5 w-1.5 rounded-full bg-primary"></span><span
+						class="font-title text-lg">fyi</span
 					>
 				</a>
 			</div>

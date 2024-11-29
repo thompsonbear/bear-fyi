@@ -5,12 +5,12 @@
 	const { navlinks } = $props();
 </script>
 
-<header class="bg-gradient-to-b sticky top-0 flex w-full justify-center from-background">
+<header class="sticky top-0 flex w-full justify-center bg-gradient-to-b from-background">
 	<nav class=" flex h-14 w-full max-w-[1200px] items-center justify-between px-4">
-		<a href="/" class="flex items-end">
-			<span class="font-title text-lg font-medium leading-6">bear</span>
-			<span class="mb-1 mr-0.5 h-1.5 w-1.5 rounded-full bg-primary"></span><span
-				class="text-lg leading-[1.35rem]">fyi</span
+		<a href="/" class="flex h-12 w-fit items-end rounded-md bg-background bg-noise">
+			<span class="font-title text-lg font-medium">bear</span>
+			<span class="mb-1.5 mr-0.5 h-1.5 w-1.5 rounded-full bg-primary"></span><span
+				class="font-title text-lg">fyi</span
 			>
 		</a>
 		<div class="flex items-center sm:gap-2">
