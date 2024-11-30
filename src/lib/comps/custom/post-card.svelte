@@ -12,7 +12,7 @@
 	let rect: DOMRect;
 	let center: Point;
 	let maxDistance: number;
-	let leaveTimeout: number | undefined = undefined;
+	let leaveTimeout: NodeJS.Timeout;
 
 	let { mousePos = $bindable(), post } = $props();
 
@@ -117,14 +117,19 @@
 			? 'block'
 			: 'hidden'}"
 	></span>
-	<span class="relative z-10 flex flex-col gap-4">
-		<div class="space-y-1">
-			<p class="text-sm">{formatDate(post.date)}</p>
-			<h1 class="font-title text-xl group-hover:text-primary md:text-5xl">
+	<span class="relative z-10 flex h-full flex-col justify-between gap-8">
+		<div class="space-y-2">
+			<p class="opacity-60">
+				{formatDate(post.published)}
+				{#if post.updated}
+					- {formatDate(post.updated)}
+				{/if}
+			</p>
+			<h1 class="font-title text-xl !leading-[1.2] group-hover:text-primary md:text-3xl">
 				{post.title}
 			</h1>
+			<p class="description">{post.description}</p>
 		</div>
-		<p class="description">{post.description}</p>
 		<div class="flex gap-1">
 			{#each post.categories as category}
 				<Badge class="bg-foreground text-background hover:bg-secondary hover:text-foreground"

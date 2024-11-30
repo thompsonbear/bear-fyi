@@ -10,6 +10,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>bear.fyi</title>
+	<meta property="description" content="Blog by Thompson Bear" />
+</svelte:head>
+
 <section
 	onmousemove={(e) => handleMouseMove(e)}
 	aria-hidden="true"

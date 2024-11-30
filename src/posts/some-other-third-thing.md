@@ -1,10 +1,10 @@
 ---
-title: First post with a much longer title than before that would need to wrap
-description: First post.
-published: '2023-4-14'
+title: Some Other Third Thing
+description: Spongebob Reference.
+published: '2024-11-29'
 categories:
-  - sveltekit
-  - svelte
+  - cartoons
+  - movies
 visible: true
 ---
 

@@ -100,3 +100,28 @@ iconify-icon {
 	width: 1em;
 	height: 1em;
 }
+
+.prose {
+	max-width: 100%;
+
+	* {
+		@apply text-foreground;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply my-4 font-title font-semibold tracking-wider;
+	}
+
+	p {
+		@apply tracking-wide text-foreground;
+	}
+
+	pre {
+		@apply bg-noise;
+	}
+}

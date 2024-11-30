@@ -1,11 +1,12 @@
 ---
 title: Second post
 description: Second post.
-date: '2023-4-16'
+published: '2023-4-16'
+updated: '2024-11-23'
 categories:
   - sveltekit
   - svelte
-published: true
+visible: true
 ---
 
 <script>

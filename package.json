@@ -19,6 +19,7 @@
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
+		"@types/node": "^22.10.1",
 		"autoprefixer": "^10.4.20",
 		"bits-ui": "^1.0.0-next.63",
 		"clsx": "^2.1.1",
@@ -39,6 +40,9 @@
 	"dependencies": {
 		"iconify-icon": "^2.1.0",
 		"mode-watcher": "^0.4.1",
+		"rehype-slug": "^6.0.0",
+		"remark-toc": "^9.0.0",
+		"shiki": "^1.24.0",
 		"svelte-radix": "^2.0.1"
 	}
 }
