@@ -34,7 +34,7 @@
 		</h2>
 	</div>
 
-	<div class="grid w-full gap-4 md:grid-cols-2">
+	<div class="grid w-full gap-4 sm:grid-cols-2">
 		{#each data.posts as post}
 			<PostCard bind:mousePos {post}></PostCard>
 		{/each}

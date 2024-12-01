@@ -1,24 +1,26 @@
 ---
 title: Second post
 description: Second post.
-published: '2023-4-16'
-updated: '2024-11-23'
+published: '4-16-2023'
+updated: '11-23-2024'
 categories:
   - sveltekit
   - svelte
 visible: true
 ---
 
-<script>
-  import Counter from './counter.svelte'
-</script>
+## Subheading 1
 
-## Svelte
+Some Text
 
-Media inside the **static** folder is served from `/`.
+> A Blockquote
 
-![Svelte](favicon.png)
+## Subheading 2
 
-## Counter
+Some more text
 
-<Counter />
+### Subheading 2.1
+
+### Subheading 2.2
+
+#### Subheading 2.2.1

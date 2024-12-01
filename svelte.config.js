@@ -6,29 +6,37 @@ import { createHighlighter } from 'shiki';
 import azure from 'svelte-adapter-azure-swa';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
+const highlighter = await createHighlighter({
+	themes: ['light-plus', 'vesper'],
+	langs: ['javascript', 'typescript', 'svelte']
+});
+
+const mdsvexOptions = {
+	extensions: ['.svx', '.md'],
+	remarkPlugins: [[remarkToc, { tight: true }]],
+	rehypePlugins: [rehypeSlug],
+	highlight: {
+		highlighter: async (code, lang = 'text') => {
+			await highlighter.loadLanguage('javascript', 'typescript');
+			const html = escapeSvelte(
+				highlighter.codeToHtml(code, {
+					lang,
+					themes: {
+						light: 'light-plus',
+						dark: 'vesper'
+					}
+				})
+			);
+			return `{@html \`${html}\` }`;
+		}
+	}
+};
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://svelte.dev/docs/kit/integrations
 	// for more information about preprocessors
-	preprocess: [
-		vitePreprocess(),
-		mdsvex({
-			extensions: ['.svx', '.md'],
-			remarkPlugins: [[remarkToc, { tight: true }]],
-			rehypePlugins: [rehypeSlug],
-			highlight: {
-				highlighter: async (code, lang = 'text') => {
-					const highlighter = await createHighlighter({
-						themes: ['vesper'],
-						langs: ['javascript', 'typescript']
-					});
-					await highlighter.loadLanguage('javascript', 'typescript');
-					const html = escapeSvelte(highlighter.codeToHtml(code, { lang, theme: 'vesper' }));
-					return `{@html \`${html}\` }`;
-				}
-			}
-		})
-	],
+	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
 
 	kit: {
 		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.

@@ -5,9 +5,11 @@
 	const { navlinks } = $props();
 </script>
 
-<header class="sticky top-0 flex w-full justify-center bg-gradient-to-b from-background">
+<header
+	class="sticky top-0 z-50 flex w-full justify-center bg-gradient-to-b from-background via-background"
+>
 	<nav class=" flex h-14 w-full max-w-[1200px] items-center justify-between px-4">
-		<a href="/" class="flex w-fit items-end rounded-md bg-background bg-noise font-title text-lg">
+		<a href="/" class="flex w-fit items-end font-title text-lg">
 			<span class="font-medium">bear</span>
 			<span class="mb-1.5 mr-0.5 h-1.5 w-1.5 rounded-full bg-primary"></span><span>fyi</span>
 		</a>
@@ -15,7 +17,7 @@
 			{#each navlinks as link}
 				<Button
 					href={link.href}
-					variant="link"
+					variant="ghost"
 					class="text-foreground hover:text-primary focus:ring-0"
 				>
 					{link.text}

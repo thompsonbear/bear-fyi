@@ -8,19 +8,23 @@
 
 <svelte:head>
 	<title>{data.meta.title}</title>
+	{#if data.meta.description}
+		<meta property="description" content={data.meta.description} />
+	{/if}
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={data.meta.title} />
 </svelte:head>
 
-<article>
-	<div class="mb-14 mt-10 space-y-8">
-		<div class="flex justify-between">
-			<div class="flex flex-wrap gap-2">
-				{#each data.meta.categories as category}
-					<Badge variant="outline" class="h-fit">{category}</Badge>
-				{/each}
-			</div>
-			<p class="flex gap-4 opacity-50">
+<article class="mb-20">
+	<div class="my-16 space-y-4">
+		<hgroup class="space-y-4">
+			<h1 class="font-title text-4xl !leading-[1.2] md:text-6xl">{data.meta.title}</h1>
+			{#if data.meta.description}
+				<p class="text-lg text-secondary-foreground md:text-2xl">{data.meta.description}</p>
+			{/if}
+		</hgroup>
+		<div class="flex">
+			<p class="flex gap-4 text-muted-foreground">
 				<span class="flex items-center gap-1"
 					><iconify-icon icon="mingcute:git-merge-line"></iconify-icon>{formatDate(
 						data.meta.published
@@ -35,8 +39,6 @@
 				{/if}
 			</p>
 		</div>
-
-		<h1 class="font-title text-4xl !leading-[1.2] md:text-6xl">{data.meta.title}</h1>
 	</div>
 
 	<div class="prose">

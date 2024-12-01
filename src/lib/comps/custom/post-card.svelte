@@ -73,14 +73,6 @@
 		}, 250);
 	}
 
-	function handleMouseDown() {
-		card.style.scale = '0.99';
-	}
-
-	function handleMouseUp() {
-		card.style.scale = '1';
-	}
-
 	function handleResize() {
 		rect = card.getBoundingClientRect();
 		center = { x: rect.width / 2, y: rect.height / 2 };
@@ -103,9 +95,7 @@
 	href="/{post.slug}"
 	bind:this={card}
 	draggable="false"
-	class="border-3 relative flex flex-col gap-4 overflow-clip rounded border bg-secondary bg-noise p-4 shadow-sm"
-	onmousedown={handleMouseDown}
-	onmouseup={handleMouseUp}
+	class="relative flex flex-col gap-4 overflow-clip rounded border border-muted bg-card bg-noise p-4 shadow-sm active:scale-[.98] active:transition-all"
 	onmousemove={handleMouseMove}
 	onmouseleave={handleMouseLeave}
 	onmouseenter={handleMouseEnter}
@@ -117,22 +107,26 @@
 			? 'block'
 			: 'hidden'}"
 	></span>
-	<span class="relative z-10 flex h-full flex-col justify-between gap-8">
-		<div class="space-y-2">
-			<p class="opacity-60">
+	<span class="relative z-10 flex h-full flex-col justify-between space-y-4">
+		<div class="space-y-4">
+			<p class="text-secondary-foreground">
 				{formatDate(post.published)}
 				{#if post.updated}
 					- {formatDate(post.updated)}
 				{/if}
 			</p>
-			<h1 class="font-title text-xl !leading-[1.2] group-hover:text-primary md:text-3xl">
-				{post.title}
-			</h1>
-			<p class="description">{post.description}</p>
+			<hgroup class="space-y-2">
+				<h1 class="font-title text-xl font-medium !leading-[1.2] md:text-3xl">
+					{post.title}
+				</h1>
+				<p class="text-secondary-foreground">{post.description}</p>
+			</hgroup>
 		</div>
 		<div class="flex gap-1">
 			{#each post.categories as category}
-				<Badge class="bg-foreground text-background hover:bg-secondary hover:text-foreground"
+				<Badge
+					variant="outline"
+					class="border border-secondary-foreground opacity-80 hover:bg-secondary hover:opacity-100"
 					>{category}</Badge
 				>
 			{/each}
