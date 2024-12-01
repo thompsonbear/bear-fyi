@@ -95,7 +95,7 @@
 	href="/{post.slug}"
 	bind:this={card}
 	draggable="false"
-	class="relative flex flex-col gap-4 overflow-clip rounded border border-muted bg-card bg-noise p-4 shadow-sm active:scale-[.98] active:transition-all"
+	class="relative flex flex-col gap-4 overflow-clip rounded border bg-card bg-noise p-4 shadow-sm active:scale-[.98] active:transition-all dark:border-muted"
 	onmousemove={handleMouseMove}
 	onmouseleave={handleMouseLeave}
 	onmouseenter={handleMouseEnter}

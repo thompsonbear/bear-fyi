@@ -4,14 +4,14 @@
 
 @layer base {
 	:root {
-		--background: 56 70% 84%;
+		--background: 56 70% 95%;
 		--foreground: 190 33% 7%;
-		--card: 55 100% 88%;
+		--card: 55 100% 98%;
 		--card-foreground: 190 33% 7%;
-		--popover: 55 100% 88%;
+		--popover: 55 100% 98%;
 		--popover-foreground: 190 33% 7%;
 		--primary: 25 98% 64%;
-		--primary-foreground: 222 43% 9%;
+		--primary-foreground: 222 43% 14%;
 		--secondary: 60 4.8% 95.9%;
 		--secondary-foreground: 24 9.8% 10%;
 		--muted: 60 4.8% 95.9%;
@@ -141,7 +141,7 @@ iconify-icon {
 			content: none;
 		}
 
-		@apply rounded border border-muted bg-card bg-noise px-2 py-1;
+		@apply rounded border bg-card bg-noise px-2 py-1 dark:border-muted;
 	}
 
 	pre > code {
@@ -149,6 +149,6 @@ iconify-icon {
 	}
 
 	pre {
-		@apply border border-muted bg-noise shadow-sm;
+		@apply border bg-noise shadow-sm dark:border-muted;
 	}
 }
