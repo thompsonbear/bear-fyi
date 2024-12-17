@@ -131,6 +131,10 @@ iconify-icon {
 		@apply border-foreground;
 	}
 
+	a {
+		@apply font-bold text-primary no-underline decoration-2 underline-offset-[6px] transition-all hover:underline hover:underline-offset-4;
+	}
+
 	p {
 		@apply tracking-wide text-foreground/90;
 	}
