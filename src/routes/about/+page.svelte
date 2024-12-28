@@ -6,7 +6,7 @@
 <section
 	class="mt-20 grid gap-8 p-4 sm:mt-0 sm:min-h-screen sm:grid-cols-[auto_1fr] sm:place-content-center sm:pb-44"
 >
-	<img class="w-44" src="/images/headshot.png" alt="Headshot of Thompson Bear" />
+	<img class="w-44" src="/images/headshot.webp" alt="Headshot of Thompson Bear" />
 	<div class="space-y-4">
 		<h1 class="font-title text-3xl">Thompson Bear</h1>
 		<div>
