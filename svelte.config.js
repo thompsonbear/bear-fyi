@@ -17,7 +17,7 @@ const mdsvexOptions = {
 	rehypePlugins: [rehypeSlug],
 	highlight: {
 		highlighter: async (code, lang = 'text') => {
-			await highlighter.loadLanguage('javascript', 'typescript');
+			await highlighter.loadLanguage('javascript', 'typescript', 'bash', 'go');
 			const html = escapeSvelte(
 				highlighter.codeToHtml(code, {
 					lang,
