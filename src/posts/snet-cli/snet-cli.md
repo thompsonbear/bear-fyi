@@ -9,7 +9,7 @@ categories:
 visible: true
 ---
 
-![snet-cli banner](/src/posts/snet-cli/snet-banner.webp)
+![snet-cli banner](/posts/snet-cli/snet-banner.webp)
 
 ## TL;DR
 
