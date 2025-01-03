@@ -21,7 +21,7 @@ My very first programming teacher (shoutout to Mr. Spotts) once taught me that t
 
 When I was looking to write my first "real" Go project, I was an entry-mid level networking engineer, and while I had a basic understanding of subnetting, I felt as though I should deepen my understanding.
 
-One additional major reason I wanted to write a subnetting CLI tool was because it would just be quicker and easier than opening a web browser and finding an online calculator, especially with my environment of choice at the time being the terminal. While this project may not have been justifiable for someone else, I felt it had a good amount of things included that would help me to better understand the topics I was attempting to learn a the time.
+One additional major reason I wanted to write a subnetting CLI tool was because it would just be quicker and easier than opening a web browser and finding an online calculator, especially with my environment of choice at the time being the terminal. While this project may not have been justifiable for someone else, I felt it had a good amount of things included that would help me to better understand the topics I was attempting to learn at the time.
 
 ## Architecture
 
