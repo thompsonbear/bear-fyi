@@ -25,7 +25,7 @@
 </script>
 
 {#snippet dot()}
-<span class="w-2 h-2 inline-block bg-primary translate-y-5 rounded-full"></span>
+<span class="w-2 h-2 block bg-primary translate-y-5 rounded-full min-w-2"></span>
 {/snippet}
 
 {#snippet domain_part(long_label: string, short_label: string, break_length: number, text: string)}
@@ -41,7 +41,7 @@
 </div>
 {/snippet}
 
-<div class="flex gap-1 m-6 min-h-20">
+<div class="flex gap-1 mt-6 mb-4 sm:mx-6 mx-4 min-h-20 w-fit">
     {#each subs as sub}
         {#if sub}
         {@render domain_part("subdomain", "sub", 4, sub)}
