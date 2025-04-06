@@ -22,3 +22,9 @@ export type Point = {
 	y: number;
 	z?: number;
 };
+
+export type FlowNode = {
+	label: string;
+	icon?: string;
+	connection_label?: string;
+}

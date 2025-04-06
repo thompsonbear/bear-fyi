@@ -26,3 +26,17 @@ export function clearAnimations(element: HTMLElement) {
 export function getDistance(first: Point, second: Point) {
 	return Math.sqrt((second.x - first.x) ** 2 + (second.y - first.y) ** 2);
 }
+
+export async function resolveDomainRecord(record_type: string, domain: string) {
+	let url = `https://dns.google/resolve?name=${domain}`
+	if(record_type){
+		url += `&type=${record_type}`
+	}
+	const res = await fetch(url)
+
+	if (res.ok) {
+		return res.json();
+	} else {
+		return "";
+	}
+}

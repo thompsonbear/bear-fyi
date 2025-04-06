@@ -1,23 +1,10 @@
 <script lang="ts">
     const {domain, record_type = "A", error_message = "Lookup failure"} = $props();
 
-    async function fetchDomainRecord() {
-        let url = `https://dns.google/resolve?name=${domain}`
-        if(record_type){
-            url += `&type=${record_type}`
-        }
-        const res = await fetch(url)
+    import { resolveDomainRecord } from '$lib/utils'
 
-        if (res.ok) {
-			return res.json();
-		} else {
-			return "";
-		}
-    }
-
-    const promise = fetchDomainRecord()
+    const promise = resolveDomainRecord( record_type, domain )
 </script>
-
 
 <code>
     {#await promise}

@@ -9,15 +9,103 @@ visible: true
 ---
 
 <script>
-   import DomainTool from './domain-tool/domain-tool.svelte';
-   import ResolveDomainRecord from '$lib/comps/custom/resolve-domain-record.svelte';
+  import DomainTool from './domain-tool/domain-tool.svelte';
+  import ResolveDomainRecord from '$lib/comps/custom/resolve-domain-record.svelte';
+  import Flow from '$lib/comps/custom/flow/flow.svelte';
 
-   let domain_list = ["charts.bear.fyi", "music.youtube.com", "bsky.app","grapesoda.ink", "thompsonbear.com", "console.cloud.google.com"]
+  import { resolveDomainRecord } from '$lib/utils'
+  
+  const domain_list = ["charts.bear.fyi", "music.youtube.com", "bsky.app","grapesoda.ink", "thompsonbear.com", "console.cloud.google.com"]
+
+  const file_server_flow1 = [
+    {
+      label: "User PCs",
+      icon: "mingcute:computer-line",
+      connection_label: "192.168.5.10"
+    }, 
+    {
+      label: "File Server",
+      icon: "mingcute:server-2-line"
+    }
+  ]
+
+  const file_server_flow2 = [
+    {
+      label: "User PCs",
+      icon: "mingcute:computer-line",
+      connection_label: "files.corp.local"
+    },
+    {
+      label: "DNS Server",
+      icon: "mingcute:server-line",
+      connection_label: "192.168.5.10"
+    },
+    {
+      label: "File Server",
+      icon: "mingcute:server-2-line"
+    }
+  ]
+
+  const business_website_flow1a = [
+    {
+      label: "User PCs",
+      icon: "mingcute:computer-line",
+      connection_label: "example.com"
+    },
+    {
+      label: "Gateway",
+      icon: "mingcute:router-modem-line",
+      connection_label: "example.com"
+    },
+    {
+      label: "Internet",
+      icon: "mingcute:cloud-line",
+    }
+  ]
+
+  let business_website_flow1b = $state([
+    {
+      label: "Internet",
+      icon: "mingcute:cloud-line",
+      connection_label: "Resolving Record"
+    },
+    {
+      label: "Gateway",
+      icon: "mingcute:router-modem-line",
+      connection_label: "192.168.5.11"
+    },
+    {
+      label: "Web Server",
+      icon: "mingcute:server-line"
+    }
+  ])
+
+  const business_website_flow2 = [
+    {
+      label: "User PCs",
+      icon: "mingcute:computer-line",
+      connection_label: "example.com"
+    },
+    {
+      label: "DNS Server",
+      icon: "mingcute:server-line",
+      connection_label: "192.168.5.11"
+    },
+    {
+      label: "Web Server",
+      icon: "mingcute:server-line"
+    }
+  ]
+
+  $effect(async () => {
+    await resolveDomainRecord('A', 'example.com').then(pip => business_website_flow1b[0].connection_label = pip.Answer[0].data)
+  })
+
 </script>
 
 > At the surface, domains and DNS can seem rather complex, but once one understands some basic principles, it can be rather easy to understand.
 
-## What is a Domain
+# What is a Domain
 A domain is a human readable name used to represent a location on the internet or intranet. Some examples of domain names are "google.com", "charts.bear.fyi", "corp.local", etc. You will notice that there are multiple parts in each domain name that are seperated by periods or dots.
 
 The parts of each domain from right to left are as follows:
@@ -32,19 +120,32 @@ You can visualize the various parts of your favorite domain using the tool below
 
 <DomainTool {domain_list}/>
 
-## What is DNS
-DNS stands for Domain Name System and is the service responsible to route users from a human readable domain like `bear.fyi` to it's relative IP address at <ResolveDomainRecord domain='bear.fyi'/> that a computer can understand. In my mind, there are two major kinds of DNS: **Public** and **Private**.
+# What is DNS
+DNS stands for Domain Name System and is the service responsible to route users from a human readable domain like `bear.fyi` to it's relative IP address at <ResolveDomainRecord domain='bear.fyi'/> which a computer can understand. In my mind, there are two major kinds of DNS: **Public** and **Private**.
 
-### Private DNS
-Private or Internal DNS in this case refers to how domain to DNS record translation happens within your internal network. Private DNS is much more common to have on a business network, since you may have internal services that users would need to access, but may not like to be accessible to the outside world. The following are just a couple of examples of how this might be used in a business environment:
+## Private DNS
+**Private** aka Internal DNS in this case refers to how domain to DNS record translation happens within your internal network, before your computer accesses the internet. You're much more likely to encounter Private DNS on your business network, since your business may have internal services that your coworkers would need to access to while not being accessible to the outside world. The following are just a couple of examples of how Private DNS might be used in a business environment:
 
-#### File Server Example
-For example, let's assume your workplace has a secure file storage server that multiple users and devices need to access. Your IT department could choose to connect each computer to the file server shares via it's network address like `192.168.5.10` for example. This configuration would work absolutely fine in the short term, but apart from the network address not being very memorable, this brings up another question for the long-term. If the file server network address needs to be updated at a later date, what would be required? Simply, the server connection would need to be updated on each user's PC, which could be a ton of work in a large organization.
+### File Server Example
+Let's assume your workplace has a secure file storage server that multiple users and devices need to access. Your IT department could choose to connect each computer to the file server shares via it's network address like `192.168.5.10` for example.
 
-If the file server in this example was instead configured with a name like `files.corp.local` in DNS, not only is this name more memorable, but instead of the configuration requiring updates to each user's computer, the change could instead be made in DNS to point files.corp.local to a new network address.
+<Flow nodes={file_server_flow1}/>
 
-#### Business Website Example
-For another quick example, let's say your company is hosting a website at your office location. Would it make sense for users browsing to the company website from the office to reach out to to the internet, only to be routed back to their local network? Of course not, we could instead use Private DNS to direct the user right to the internal server hosting the website. In some cases, not doing this can even cause issues where the website is not browseable from the office it's hosted out of, which can cause confusion for users.
+This configuration would work absolutely fine in the short term, but apart from the network address not being very memorable, this brings up another question for the long-term. If the file server network address needs to be updated at a later date, what would be required? Simply, the file server connection would need to be updated on each user's PC, which could be a ton of work in a large organization.
 
-### Public DNS
-Public or External DNS refers to how domain to DNS record translation happens on the public internet, after your network traffic leaves your home or office network. 
+If the file server in this example was instead configured with a name like `files.corp.local` in DNS and configured with the DNS name on each user's computer, not only is this name more memorable, but instead the change could be made in DNS to point files.corp.local to a new network address, ideally allowing a swift cutover to the new server.
+
+<Flow nodes={file_server_flow2} note="Note: Network flow simplified for clarity"/>
+
+### Business Website Example
+For another quick example, let's say your company is hosting a website at your office location. Would it make sense for users browsing to the company website from the office to reach out to to the internet, only to be routed back to their local network like the following?
+
+<Flow nodes={business_website_flow1a} />
+<Flow nodes={business_website_flow1b} />
+
+Of course not, we could instead use Private DNS to direct the user right to the internal server hosting the website. In some cases, not doing this can even cause issues where the website is not browseable from the office it's hosted out of, which can cause confusion for users.
+
+<Flow nodes={business_website_flow2} note="Note: Network flow simplified for clarity"/>
+
+## Public DNS
+**Public** aka External DNS refers to how domain to DNS record translation happens on the public internet, after your network traffic leaves your home or office network. 
